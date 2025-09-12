@@ -176,7 +176,9 @@ typedef enum SDL_WindowEventID
     SDL_WINDOWEVENT_TAKE_FOCUS,     /**< Window is being offered a focus (should SetWindowInputFocus() on itself or a subwindow, or ignore) */
     SDL_WINDOWEVENT_HIT_TEST,       /**< Window had a hit test that wasn't SDL_HITTEST_NORMAL. */
     SDL_WINDOWEVENT_ICCPROF_CHANGED,/**< The ICC profile of the window's display has changed. */
-    SDL_WINDOWEVENT_DISPLAY_CHANGED /**< Window has been moved to display data1. */
+    SDL_WINDOWEVENT_DISPLAY_CHANGED,/**< Window has been moved to display data1. */
+
+    SDL_WINDOWEVENT_SAFE_AREA_CHANGED, /**< The window safe area has been changed */
 } SDL_WindowEventID;
 
 /**
@@ -1042,6 +1044,29 @@ extern DECLSPEC void SDLCALL SDL_SetWindowSize(SDL_Window * window, int w,
  */
 extern DECLSPEC void SDLCALL SDL_GetWindowSize(SDL_Window * window, int *w,
                                                int *h);
+
+/**
+ * Get the safe area for this window.
+ *
+ * Some devices have portions of the screen which are partially obscured or
+ * not interactive, possibly due to on-screen controls, curved edges, camera
+ * notches, TV overscan, etc. This function provides the area of the window
+ * which is safe to have interactable content. You should continue rendering
+ * into the rest of the window, but it should not contain visually important
+ * or interactible content.
+ *
+ * \param window the window to query.
+ * \param rect a pointer filled in with the client area that is safe for
+ *             interactive content.
+ * \returns true on success or false on failure; call SDL_GetError() for more
+ *          information.
+ *
+ * \threadsafety This function should only be called on the main thread.
+ *
+ * \since This function is available since SDL 3.2.0.
+ *        Backported from SDL3 (>3.2.6, ed6a72a7 2025-09-10) to SDL2 (> 2.32.10)
+ */
+extern DECLSPEC SDL_bool SDLCALL SDL_GetWindowSafeArea(SDL_Window *window, SDL_Rect *rect);
 
 /**
  * Get the size of a window's borders (decorations) around the client area.

@@ -69,6 +69,10 @@ static int Android_ScreenRate = 0;
 SDL_sem *Android_PauseSem = NULL;
 SDL_sem *Android_ResumeSem = NULL;
 SDL_mutex *Android_ActivityMutex = NULL;
+int Android_SafeInsetLeft = 0;
+int Android_SafeInsetRight = 0;
+int Android_SafeInsetTop = 0;
+int Android_SafeInsetBottom = 0;
 
 static void Android_SuspendScreenSaver(_THIS)
 {
@@ -294,6 +298,18 @@ void Android_SendResize(SDL_Window *window)
         display->current_mode = display->display_modes[0];
 
         SDL_SendWindowEvent(window, SDL_WINDOWEVENT_RESIZED, Android_SurfaceWidth, Android_SurfaceHeight);
+    }
+}
+
+void Android_SetWindowSafeAreaInsets(int left, int right, int top, int bottom)
+{
+    Android_SafeInsetLeft = left;
+    Android_SafeInsetRight = right;
+    Android_SafeInsetTop = top;
+    Android_SafeInsetBottom = bottom;
+
+    if (Android_Window) {
+        SDL_SetWindowSafeAreaInsets(Android_Window, left, right, top, bottom);
     }
 }
 

@@ -104,6 +104,12 @@ struct SDL_Window
     SDL_bool is_destroying;
     SDL_bool is_dropping; /* drag/drop in progress, expecting SDL_SendDropComplete(). */
 
+    int safe_inset_left;
+    int safe_inset_right;
+    int safe_inset_top;
+    int safe_inset_bottom;
+    SDL_Rect safe_rect;
+
     SDL_Rect mouse_rect;
 
     SDL_WindowShaper *shaper;
@@ -501,6 +507,7 @@ extern SDL_VideoDisplay *SDL_GetDisplayForWindow(SDL_Window *window);
 extern void *SDL_GetDisplayDriverData(int displayIndex);
 extern SDL_bool SDL_IsVideoContextExternal(void);
 extern int SDL_GetMessageBoxCount(void);
+extern void SDL_SetWindowSafeAreaInsets(SDL_Window *window, int left, int right, int top, int bottom);
 
 extern void SDL_GL_DeduceMaxSupportedESProfile(int *major, int *minor);
 

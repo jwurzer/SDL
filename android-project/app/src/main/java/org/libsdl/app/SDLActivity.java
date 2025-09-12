@@ -793,6 +793,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                             if (Build.VERSION.SDK_INT >= 28 /* Android 9 (Pie) */) {
                                 window.getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                             }
+                            if (Build.VERSION.SDK_INT >= 30 /* Android 11 (R) */ &&
+                                Build.VERSION.SDK_INT < 35 /* Android 15 */) {
+                                SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
+                            }
                         }
                     } else {
                         Log.e(TAG, "error handling message, getContext() returned no Activity");
@@ -931,6 +935,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public static native boolean nativeGetHintBoolean(String name, boolean default_value);
     public static native void nativeSetenv(String name, String value);
     public static native void onNativeOrientationChanged(int orientation);
+    public static native void onNativeInsetsChanged(int left, int right, int top, int bottom);
     public static native void nativeAddTouch(int touchId, String name);
     public static native void nativePermissionResult(int requestCode, boolean result);
     public static native void onNativeLocaleChanged();

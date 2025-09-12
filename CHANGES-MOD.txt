@@ -1,0 +1,42 @@
+
+Add SDL_GetWindowSafeArea() support
+
+Backported from SDL3 (>3.2.6, ed6a72a7 2025-09-10) to SDL2 (> 2.32.10)
+
+changes:
+* include/SDL_video.h
+  - Add SDL_WINDOWEVENT_SAFE_AREA_CHANGED at SDL_WindowEventID (include/SDL_video.h)
+  - Add SDL_GetWindowSafeArea()
+* src/video/SDL_sysvideo.h
+  - Extend SDL_Window with
+    int safe_inset_left;
+    int safe_inset_right;
+    int safe_inset_top;
+    int safe_inset_bottom;
+    SDL_Rect safe_rect;
+  - Add SDL_SetWindowSafeAreaInsets()
+* src/video/android/SDL_androidvideo.h
+  - Add Android_SetWindowSafeAreaInsets()
+  - Add to Private display data
+    int Android_SafeInsetLeft;
+    int Android_SafeInsetRight;
+    int Android_SafeInsetTop;
+    int Android_SafeInsetBottom;
+* Changes for implementation at
+  - src/core/android/SDL_android.c
+  - src/video/SDL_video.c
+  - src/video/android/SDL_androidvideo.c
+  - src/video/android/SDL_androidwindow.c
+* SDLActivity.java (android-project/app/src/main/java/org/libsdl/app/SDLActivity.java)
+  - Call SDLActivity.onNativeInsetsChanged(0, 0, 0, 0) for COMMAND_CHANGE_WINDOW_STYLE
+    But only for Build.VERSION.SDK_INT >= 30 (Android 11) and Build.VERSION.SDK_INT < 35 (Android 15)
+  - Add public static native void onNativeInsetsChanged(int left, int right, int top, int bottom);
+* SDLSurface.java (android-project/app/src/main/java/org/libsdl/app/SDLSurface.java)
+  - implement View.OnApplyWindowInsetsListener for SDLSurface
+  - Override onApplyWindowInsets() and
+    call SDLActivity.onNativeInsetsChanged() if Build.VERSION.SDK_INT >= 30 (Android 11 (R)).
+* Execute gendynapi.pl (src/dynapi/gendynapi.pl) and modify:
+  - src/dynapi/SDL2.exports
+  - src/dynapi/SDL_dynapi_overrides.h
+  - src/dynapi/SDL_dynapi_procs.h
+

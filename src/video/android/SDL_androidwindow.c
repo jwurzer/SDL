@@ -93,6 +93,8 @@ int Android_CreateWindow(_THIS, SDL_Window *window)
     }
 #endif
 
+    SDL_SetWindowSafeAreaInsets(window, Android_SafeInsetLeft, Android_SafeInsetRight, Android_SafeInsetTop, Android_SafeInsetBottom);
+
     window->driverdata = data;
     Android_Window = window;
 
