@@ -3160,7 +3160,7 @@ void SDL_OnWindowHidden(SDL_Window *window)
 
 void SDL_OnWindowResized(SDL_Window *window)
 {
-	SDL_CheckWindowSafeAreaChanged(window);
+    SDL_CheckWindowSafeAreaChanged(window);
 
     int display_index = SDL_GetWindowDisplayIndex(window);
     window->surface_valid = SDL_FALSE;

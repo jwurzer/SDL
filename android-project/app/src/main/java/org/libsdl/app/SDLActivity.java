@@ -793,10 +793,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                             if (Build.VERSION.SDK_INT >= 28 /* Android 9 (Pie) */) {
                                 window.getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                             }
-                            if (Build.VERSION.SDK_INT >= 30 /* Android 11 (R) */ &&
-                                Build.VERSION.SDK_INT < 35 /* Android 15 */) {
-                                SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
-                            }
+                            //if (Build.VERSION.SDK_INT >= 30 /* Android 11 (R) */ &&
+                            //    Build.VERSION.SDK_INT < 35 /* Android 15 */) {
+                            //    SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
+                            //}
+                            // always reset to 0 (independent of SDK_INT >= 30 && < 35)
+                            SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
                         }
                     } else {
                         Log.e(TAG, "error handling message, getContext() returned no Activity");

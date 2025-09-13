@@ -34,6 +34,15 @@
 #include "SDL_uikitmodes.h"
 #include "SDL_uikitwindow.h"
 
+/* #define DEBUG_UIKITVIEW */
+#define DEBUG_UIKITVIEW
+
+#ifdef DEBUG_UIKITVIEW
+#define DLog(fmt, ...) printf("%s: " fmt "\n", __func__, ##__VA_ARGS__)
+#else
+#define DLog(...) do { } while (0)
+#endif
+
 /* The maximum number of mouse buttons we support */
 #define MAX_MOUSE_BUTTONS    5
 
@@ -104,6 +113,7 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
     if (window == sdlwindow) {
         return;
     }
+    DLog("setSDLWindow: old %p, new: %p", sdlwindow, window);
 
     /* Remove ourself from the old window. */
     if (sdlwindow) {
@@ -369,6 +379,21 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
                                 locationInView.x, locationInView.y, pressure);
         }
     }
+}
+
+- (void)safeAreaInsetsDidChange
+{
+    // Update the safe area insets
+    SDL_SetWindowSafeAreaInsets(sdlwindow,
+                                (int)SDL_ceilf(self.safeAreaInsets.left),
+                                (int)SDL_ceilf(self.safeAreaInsets.right),
+                                (int)SDL_ceilf(self.safeAreaInsets.top),
+                                (int)SDL_ceilf(self.safeAreaInsets.bottom));
+    DLog("safe area with %d %d %d %d",
+                                (int)SDL_ceilf(self.safeAreaInsets.left),
+                                (int)SDL_ceilf(self.safeAreaInsets.right),
+                                (int)SDL_ceilf(self.safeAreaInsets.top),
+                                (int)SDL_ceilf(self.safeAreaInsets.bottom));
 }
 
 #if TARGET_OS_TV || defined(__IPHONE_9_1)

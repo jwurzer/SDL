@@ -24,9 +24,15 @@ changes:
     int Android_SafeInsetBottom;
 * Changes for implementation at
   - src/core/android/SDL_android.c
+    implements native SDLActivity.onNativeInsetsChanged() and
+    calls Android_SetWindowSafeAreaInsets().
   - src/video/SDL_video.c
+    implements SDL_SetWindowSafeAreaInsets()
   - src/video/android/SDL_androidvideo.c
+    implements Android_SetWindowSafeAreaInsets() and
+    calls SDL_SetWindowSafeAreaInsets()
   - src/video/android/SDL_androidwindow.c
+    calls SDL_SetWindowSafeAreaInsets()
 * SDLActivity.java (android-project/app/src/main/java/org/libsdl/app/SDLActivity.java)
   - Call SDLActivity.onNativeInsetsChanged(0, 0, 0, 0) for COMMAND_CHANGE_WINDOW_STYLE
     But only for Build.VERSION.SDK_INT >= 30 (Android 11) and Build.VERSION.SDK_INT < 35 (Android 15)
@@ -35,8 +41,18 @@ changes:
   - implement View.OnApplyWindowInsetsListener for SDLSurface
   - Override onApplyWindowInsets() and
     call SDLActivity.onNativeInsetsChanged() if Build.VERSION.SDK_INT >= 30 (Android 11 (R)).
+* src/video/cocoa/SDL_cocoawindow.m
+  - implementation for macOS
+* src/video/uikit/SDL_uikitview.h / src/video/uikit/SDL_uikitview.m
+  - implementation for iOS
 * Execute gendynapi.pl (src/dynapi/gendynapi.pl) and modify:
   - src/dynapi/SDL2.exports
   - src/dynapi/SDL_dynapi_overrides.h
   - src/dynapi/SDL_dynapi_procs.h
 
+Auf Branch sdl2_mod
+Änderungen, die nicht zum Commit vorgemerkt sind:
+  (benutzen Sie "git add <Datei>...", um die Änderungen zum Commit vorzumerken)
+  (benutzen Sie "git restore <Datei>...", um die Änderungen im Arbeitsverzeichnis zu verwerfen)
+
+keine Änderungen zum Commit vorgemerkt (benutzen Sie "git add" und/oder "git commit -a")

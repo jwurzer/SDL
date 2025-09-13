@@ -12,6 +12,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.DisplayCutout;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -194,15 +195,37 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Window inset
     @Override
     public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+
+        int left = 0;
+        int top = 0;
+        int right = 0;
+        int bottom = 0;
+        if (false) {
+        // TODO add support for display cutout only.
         if (Build.VERSION.SDK_INT >= 30 /* Android 11 (R) */) {
             Insets combined = insets.getInsets(WindowInsets.Type.systemBars() |
                     WindowInsets.Type.systemGestures() |
                     WindowInsets.Type.mandatorySystemGestures() |
                     WindowInsets.Type.tappableElement() |
                     WindowInsets.Type.displayCutout());
-
-            SDLActivity.onNativeInsetsChanged(combined.left, combined.right, combined.top, combined.bottom);
+            if (combined) {
+                left = combined.left;
+                right = combined.right;
+                top = combined.top;
+                bottom = combined.bottom;
+            }
         }
+        }
+        else if (Build.VERSION.SDK_INT >= 28 /* Android 9 (P) */) {
+            DisplayCutout cutout = insets.getDisplayCutout();
+            if (cutout != null) {
+                left = cutout.getSafeInsetLeft();
+                top = cutout.getSafeInsetTop();
+                right = cutout.getSafeInsetRight();
+                bottom = cutout.getSafeInsetBottom();
+            }
+        }
+        SDLActivity.onNativeInsetsChanged(left, right, top, bottom);
 
         // Pass these to any child views in case they need them
         return insets;

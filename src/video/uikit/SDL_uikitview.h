@@ -45,6 +45,8 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 
+- (void)safeAreaInsetsDidChange;
+
 @end
 
 /* vi: set ts=4 sw=4 expandtab: */

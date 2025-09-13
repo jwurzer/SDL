@@ -66,6 +66,12 @@
 
 @end
 
+@interface NSScreen (SDL)
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 120000 // Added in the 12.0 SDK
+@property(readonly) NSEdgeInsets safeAreaInsets;
+#endif
+@end
+
 @interface NSWindow (SDL)
 #if MAC_OS_X_VERSION_MAX_ALLOWED < 101000 /* Added in the 10.10 SDK */
 @property (readonly) NSRect contentLayoutRect;
@@ -2228,6 +2234,22 @@ void Cocoa_SetWindowFullscreen(_THIS, SDL_Window * window, SDL_VideoDisplay * di
         [data.listener pauseVisibleObservation];
         [nswindow makeKeyAndOrderFront:nil];
         [data.listener resumeVisibleObservation];
+    }
+
+    // Update the safe area insets
+    // The view never seems to reflect the safe area, so we'll use the screen instead
+    if (@available(macOS 12.0, *)) {
+        if (fullscreen) {
+            NSScreen *screen = [nswindow screen];
+
+            SDL_SetWindowSafeAreaInsets(data.window,
+                                        (int)SDL_ceilf(screen.safeAreaInsets.left),
+                                        (int)SDL_ceilf(screen.safeAreaInsets.right),
+                                        (int)SDL_ceilf(screen.safeAreaInsets.top),
+                                        (int)SDL_ceilf(screen.safeAreaInsets.bottom));
+        } else {
+            SDL_SetWindowSafeAreaInsets(data.window, 0, 0, 0, 0);
+        }
     }
 
     ScheduleContextUpdates(data);
