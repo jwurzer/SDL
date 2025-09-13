@@ -208,7 +208,7 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                     WindowInsets.Type.mandatorySystemGestures() |
                     WindowInsets.Type.tappableElement() |
                     WindowInsets.Type.displayCutout());
-            if (combined) {
+            if (combined != null) {
                 left = combined.left;
                 right = combined.right;
                 top = combined.top;
@@ -225,6 +225,8 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                 bottom = cutout.getSafeInsetBottom();
             }
         }
+        Log.i("SDL", "onApplyWindowInsets: Call onNativeInsetsChanged() l " +
+                left + " r " + right + " t " + top + " b " + bottom);
         SDLActivity.onNativeInsetsChanged(left, right, top, bottom);
 
         // Pass these to any child views in case they need them
