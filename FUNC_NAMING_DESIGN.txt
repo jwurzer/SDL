@@ -1,0 +1,20 @@
+
+
+Functions with left, top, right and bottom.
+
+Order of the parameters?
+
+src/video/windows/SDL_windowswindow.h:
+int WIN_GetWindowBordersSize(_THIS, SDL_Window * window, int *top, int *left, int *bottom, int *right);
+
+src/video/android/SDL_androidvideo.h:
+void Android_SetWindowSafeAreaInsets(int left, int right, int top, int bottom);
+
+src/video/SDL_sysvideo.h:
+int (*GetWindowBordersSize)(_THIS, SDL_Window *window, int *top, int *left, int *bottom, int *right);
+void SDL_SetWindowSafeAreaInsets(SDL_Window *window, int left, int right, int top, int bottom);
+
+include/SDL_video.h
+THIS IS THE ONLY PUBLIC FUNCTION WITH SDL_ which uses top, left, bottom and right
+int SDL_GetWindowBordersSize(SDL_Window * window, int *top, int *left, int *bottom, int *right);
+

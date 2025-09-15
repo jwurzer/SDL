@@ -1067,6 +1067,28 @@ extern DECLSPEC void SDLCALL SDL_GetWindowSize(SDL_Window * window, int *w,
  *        Backported from SDL3 (>3.2.6, ed6a72a7 2025-09-10) to SDL2 (> 2.32.10)
  */
 extern DECLSPEC SDL_bool SDLCALL SDL_GetWindowSafeArea(SDL_Window *window, SDL_Rect *rect);
+/**
+ * Get the safe area insets for this window.
+ *
+ * \param window the window to query.
+ * \param top pointer to variable for storing the size of the top inset; NULL
+ *            is permitted.
+ * \param left pointer to variable for storing the size of the left inset;
+ *             NULL is permitted.
+ * \param bottom pointer to variable for storing the size of the bottom
+ *               inset; NULL is permitted.
+ * \param right pointer to variable for storing the size of the right inset;
+ *              NULL is permitted.
+ * \returns true on success or false on failure; call SDL_GetError() for more
+ *          information.
+ *
+ * \threadsafety This function should only be called on the main thread.
+ *
+ * \since This function is available since SDL2 > 2.32.10
+ */
+extern DECLSPEC SDL_bool SDLCALL SDL_GetWindowSafeAreaInsets(SDL_Window *window,
+                                                             int *top, int *left,
+                                                             int *bottom, int *right);
 
 /**
  * Get the size of a window's borders (decorations) around the client area.

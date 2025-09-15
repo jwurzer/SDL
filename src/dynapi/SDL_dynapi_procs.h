@@ -986,3 +986,4 @@ SDL_DYNAPI_PROC(int,SDL_GDKGetDefaultUser,(XUserHandle *a),(a),return)
 #endif
 SDL_DYNAPI_PROC(Uint64,SDL_GameControllerGetSteamHandle,(SDL_GameController *a),(a),return)
 SDL_DYNAPI_PROC(SDL_bool,SDL_GetWindowSafeArea,(SDL_Window *a, SDL_Rect *b),(a,b),return)
+SDL_DYNAPI_PROC(SDL_bool,SDL_GetWindowSafeAreaInsets,(SDL_Window *a, int *b, int *c, int *d, int *e),(a,b,c,d,e),return)

@@ -899,3 +899,4 @@
 #define SDL_GDKGetDefaultUser SDL_GDKGetDefaultUser_REAL
 #define SDL_GameControllerGetSteamHandle SDL_GameControllerGetSteamHandle_REAL
 #define SDL_GetWindowSafeArea SDL_GetWindowSafeArea_REAL
+#define SDL_GetWindowSafeAreaInsets SDL_GetWindowSafeAreaInsets_REAL
