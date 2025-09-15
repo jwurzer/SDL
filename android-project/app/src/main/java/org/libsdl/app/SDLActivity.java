@@ -798,8 +798,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                             //    SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
                             //}
                             // always reset to 0 (independent of SDK_INT >= 30 && < 35)
-                            Log.i(TAG, "cmd change win style: Call onNativeInsetsChanged() with zeros.");
-                            SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
+                            //Log.i(TAG, "cmd change win style: Call onNativeInsetsChanged() with zeros.");
+                            //SDLActivity.onNativeInsetsChanged(0, 0, 0, 0);
+                            // Never reset insets. Android will call the callback if necessary
                         }
                     } else {
                         Log.e(TAG, "error handling message, getContext() returned no Activity");
