@@ -2247,8 +2247,14 @@ void Cocoa_SetWindowFullscreen(_THIS, SDL_Window * window, SDL_VideoDisplay * di
                                         (int)SDL_ceilf(screen.safeAreaInsets.right),
                                         (int)SDL_ceilf(screen.safeAreaInsets.top),
                                         (int)SDL_ceilf(screen.safeAreaInsets.bottom));
+            DLog("safe area with %d %d %d %d",
+                                        (int)SDL_ceilf(self.safeAreaInsets.left),
+                                        (int)SDL_ceilf(self.safeAreaInsets.right),
+                                        (int)SDL_ceilf(self.safeAreaInsets.top),
+                                        (int)SDL_ceilf(self.safeAreaInsets.bottom));
         } else {
             SDL_SetWindowSafeAreaInsets(data.window, 0, 0, 0, 0);
+            DLog("safe area with 0 0 0 0 (hardcoded)");
         }
     }
 
