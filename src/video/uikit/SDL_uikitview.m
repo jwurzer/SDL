@@ -135,6 +135,8 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
         [data.uiwindow layoutIfNeeded];
     }
 
+    sdlwindow = window;
+
     /* Add ourself to the new window. */
     if (window) {
         data = (__bridge SDL_WindowData *) window->driverdata;
@@ -159,8 +161,6 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
          * layout now to immediately update the bounds. */
         [data.uiwindow layoutIfNeeded];
     }
-
-    sdlwindow = window;
 }
 
 #if !TARGET_OS_TV && defined(__IPHONE_13_4)
