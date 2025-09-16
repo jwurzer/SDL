@@ -3207,6 +3207,8 @@ static void SDL_CheckWindowSafeAreaChanged(SDL_Window *window, SDL_bool force_ch
 
 void SDL_SetWindowSafeAreaInsets(SDL_Window *window, int left, int right, int top, int bottom)
 {
+    CHECK_WINDOW_MAGIC(window, );
+
     SDL_bool force_changed = SDL_FALSE;
     if (window->safe_inset_left != left ||
             window->safe_inset_right != right ||
